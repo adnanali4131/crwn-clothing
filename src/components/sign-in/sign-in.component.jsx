@@ -5,7 +5,7 @@ import './sign-in.style.scss'
 import CustomButton from '../custom-button/custom-buttom.component'
 
 // importing fire base
-import { signInWithGoogle } from '../../firebase/firebase.utils'
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils'
 
 // replace the input with form input, on change add the handelchange that we are importing bcz that the name we decied to call our proprity,add our labelfrom the sign in
 import FormInput from '../form-input/form-input.component'
@@ -19,11 +19,17 @@ class SignIn extends React.Component {
       password: '',
     }
   }
-
-  handleSubmit = (event) => {
+  // here we distucture our auth from the fire base tht we import here
+  handleSubmit = async (event) => {
     event.preventDefult()
 
-    this.setState({ email: '', password: '' })
+    const { email, password } = this.state
+    try {
+      await auth.signInWithEmailAndPassword(email, password)
+      this.setState({ email: '', password: '' })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   handleChange = (event) => {
@@ -59,7 +65,11 @@ class SignIn extends React.Component {
 
           <div className="buttons">
             <CustomButton type="submit"> Sign In </CustomButton>
-            <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+            <CustomButton
+              type="button"
+              onClick={signInWithGoogle}
+              isGoogleSignIn
+            >
               Sign In with google
             </CustomButton>
           </div>

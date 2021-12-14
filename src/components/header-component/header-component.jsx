@@ -2,9 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './header.style.scss'
 import { ReactComponent as Logo } from '../../assets/crown.svg'
-
+// import connect to connect the header with the redux, they are the higher order components thy use the component as the argument and provide the sooped up cmponents
+import { connect } from 'react-redux'
 // adding the auth
-
 import { auth } from '../../firebase/firebase.utils'
 
 // DESTUCTURE THE CURRENT USER that we are geting from over app
@@ -36,4 +36,14 @@ const Header = ({ currentUser }) => (
 )
 // on click (signout) privided to us by fire base libaray
 // Add the curent user here if there is a div it will pass it out other wise it pass the link(using ternary oprator)
-export default Header
+// export default Header
+
+//to add the value we add the sate that is the root roducer
+// here we have the name that is name of the proprity and the value we want to pass into the component
+// export user from the root-reducer and the current user from the user
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+})
+
+// her ewe add the connet and the header as the argument because the header is the higher order component
+export default connect(mapStateToProps)(Header)

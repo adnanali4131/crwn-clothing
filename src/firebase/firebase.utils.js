@@ -12,6 +12,39 @@ const config = {
   appId: '1:497978817147:web:6058af8ca0535d95f440de',
   //   measurementId: '${config.measurementId}',
 }
+// here we have the function that work for the fire base system
+// here we add the user auth data that we get from the user auth libarary (from auth console), aand 2nd parameter is the  additional data(mite be a signUp data) here
+// if there is no function so it will returns the null and exist from this function
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  if (!userAuth) return
+
+  const userRef = firestore.doc(` users/${userAuth.uid}`)
+  const snapShot = await userRef.get()
+
+  // console.log(snapShot)
+
+  // here we check that data is present or not so we display the name,email from our user auth
+  // add the date to check that when we may make that document, new Date tells us the curent date that make it
+  //   we add the set method to the userref and add the value by using (set method) and usee spread oprator for all the aditional value
+  if (!snapShot.exists) {
+    const { displayName, email } = userAuth
+    const createdAt = new Date()
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData,
+      })
+    } catch (error) {
+      console.log('error creating user', error.message)
+    }
+  }
+  // here we return the user ref to work extra with it
+  // in the data base we get our data
+  return userRef
+}
 
 firebase.initializeApp(config)
 
