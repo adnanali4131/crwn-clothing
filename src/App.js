@@ -1,5 +1,11 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+// add the redirector it will redirect our page when thy eisgn in
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
 // working with the redux the current user change state will change
 import { connect } from 'react-redux'
 
@@ -57,13 +63,28 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/shop" component={shopPage} />
-            <Route path="/signin" component={SignInAndSignUpPage} />
+            <Route
+              exact
+              path="/signin"
+              render={() =>
+                this.props.currentUser ? (
+                  <Redirect to="/" />
+                ) : (
+                  <SignInAndSignUpPage />
+                )
+              }
+            />
           </Switch>
         </div>
       </Router>
     )
   }
 }
+// TO WORK with the react Redirect we need the current user from redock state,the page we dont wana show render it like we render the signIN,Up page
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+})
+
 //here dont need the new store value
 // dispatch the setCurrentUser where we pass the user from user action(invocking the user with the user that is in the user-action folder)
 // here we are just dispatching the object
@@ -72,4 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 // add app to the out come to the connect app,pass null bcz we dont need any value props from our reducers
-export default connect(null, mapDispatchToProps)(App)
+// export default connect(null, mapDispatchToProps)(App)
+
+// instid of null we add the mapstate bcz it render direct to the page
+export default connect(mapStateToProps, mapDispatchToProps)(App)
