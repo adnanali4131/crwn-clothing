@@ -20,7 +20,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         // cartItems: [...state.cartItems, action.payload],
-        // add the state items and action(that action we want to add on the pay load)
+        // add the state items and action(that action we want to add on the pay load)(these are use in to the cart-icons to change the chnages in it )
         cartItems: addItemToCart(state.cartItems, action.payload),
       }
     default:
