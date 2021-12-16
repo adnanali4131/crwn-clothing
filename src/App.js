@@ -8,14 +8,19 @@ import {
 } from 'react-router-dom'
 // working with the redux the current user change state will change
 import { connect } from 'react-redux'
+import Header from './components/header-component/header-component'
 
 import './App.css'
 import HomePage from './pages/homepage/homepage.components'
 import shopPage from './pages/shop/shope.component'
-import Header from './components/header-component/header-component'
 import SignInAndSignUpPage from './pages/sign-in-and-sign-Up/sign-in-and-sign-up'
+import CheckoutPage from './pages/checkout/checkout.component'
+
 // import the set current user from the user action
 import { setCurrentUser } from './redux/user/user.action'
+// for multipale selector
+import { createStructuredSelector } from 'reselect'
+import { selectCurrentUser } from './redux/user/user.selector'
 
 // add auth from the fire base,use it we cnage the function into the class component
 // also export this auth to the  header page bcz there is we create the SignOut button
@@ -23,7 +28,7 @@ import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 // here we add the set dispatch value so we dont neend the constructor
 class App extends React.Component {
   unsubscribeFromAuth = null
-  // here we are using the user auth t store the data into our app we are using here(this userAuth we are using into the firebase app)
+  // here we are using the user auth to store the data into our app we are using here(this userAuth we are using into the firebase app)
   // we are getting back is our user ref( this user ref we are   from the the firebase)
   //  we want the user ref to check it is our data passed to it or not
   // we calling the onsnap shot like we are calling on auth
@@ -63,6 +68,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/shop" component={shopPage} />
+            <Route exact path="/checkout" component={CheckoutPage} />
             <Route
               exact
               path="/signin"
@@ -81,8 +87,8 @@ class App extends React.Component {
   }
 }
 // TO WORK with the react Redirect we need the current user from redock state,the page we dont wana show render it like we render the signIN,Up page
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 })
 
 //here dont need the new store value

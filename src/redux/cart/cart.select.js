@@ -21,3 +21,19 @@ export const selectCartItemsCount = createSelector(
       0,
     ),
 )
+
+// here we also make the hidden slector bcz its the proprty of the cart
+export const selectCartHidden = createSelector(
+  [selectorCart],
+  (cart) => cart.hidden,
+)
+// export it to the header
+
+// for cehckout page
+export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
+  cartItems.reduce(
+    (accumalatedQuantity, cartItem) =>
+      accumalatedQuantity + cartItem.quantity * cartItem.price,
+    0,
+  ),
+)
