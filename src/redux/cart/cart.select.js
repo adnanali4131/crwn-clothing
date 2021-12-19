@@ -5,7 +5,7 @@ import { createSelector } from 'reselect'
 const selectorCart = (state) => state.cart
 
 // here we export the selectCartItems which is the proprity of cart items(inside the cart)
-export const selectCartItems = createSelector(
+export const selectCartItem = createSelector(
   [selectorCart],
   (cart) => cart.cartItems,
 )
@@ -13,7 +13,7 @@ export const selectCartItems = createSelector(
 // create the cart item count selector(from cart icon)(selectCartItemsCount=selectCartItems)
 // export it to the cart icon
 export const selectCartItemsCount = createSelector(
-  [selectCartItems],
+  [selectCartItem],
   (cartItems) =>
     cartItems.reduce(
       (accumalatedQuantity, cartItem) =>
@@ -30,7 +30,7 @@ export const selectCartHidden = createSelector(
 // export it to the header
 
 // for cehckout page
-export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
+export const selectCartTotal = createSelector([selectCartItem], (cartItems) =>
   cartItems.reduce(
     (accumalatedQuantity, cartItem) =>
       accumalatedQuantity + cartItem.quantity * cartItem.price,

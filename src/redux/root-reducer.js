@@ -3,7 +3,8 @@
 import { combineReducers } from 'redux'
 
 import userReducer from './user/user-reducer'
-
+import directoryReducer from './directory/directory.reducer'
+import shopReducer from './shop/shop.reducer'
 // here we add the cart-icon to the root rudcer
 import cartReducer from './cart/cart.reducer'
 // as we know the root is the big object wheres the key and values
@@ -11,4 +12,6 @@ import cartReducer from './cart/cart.reducer'
 export default combineReducers({
   user: userReducer,
   cart: cartReducer,
+  directory: directoryReducer,
+  shop: shopReducer,
 })

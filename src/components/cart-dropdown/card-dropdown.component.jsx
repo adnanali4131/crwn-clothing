@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 // here we need the item puu into the drop down so we add the store
 import { connect } from 'react-redux'
 //import the selector here
-import { selectCartItems } from '../../redux/cart/cart.select'
+import { selectCartItem } from '../../redux/cart/cart.select'
 // bring the toggle hiden action to close the drop down
 import { toggleCartHidden } from '../../redux/cart/cart.action'
 
@@ -40,7 +40,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
 // })
 // instid of destucturing we want the whole state bcz we are using here the cart selector
 const mapStateToProps = (state) => ({
-  cartItems: selectCartItems(state),
+  cartItems: selectCartItem(state),
 })
 
 // EXPORT THE CART to the header bcz theres the drop down will work(add to with router)
