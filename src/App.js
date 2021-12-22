@@ -21,18 +21,13 @@ import { setCurrentUser } from './redux/user/user.action'
 // for multipale selector
 import { createStructuredSelector } from 'reselect'
 import { selectCurrentUser } from './redux/user/user.selector'
-
 // add auth from the fire base,use it we cnage the function into the class component
 // also export this auth to the  header page bcz there is we create the SignOut button
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 // here we add the set dispatch value so we dont neend the constructor
 class App extends React.Component {
   unsubscribeFromAuth = null
-  // here we are using the user auth to store the data into our app we are using here(this userAuth we are using into the firebase app)
-  // we are getting back is our user ref( this user ref we are   from the the firebase)
-  //  we want the user ref to check it is our data passed to it or not
-  // we calling the onsnap shot like we are calling on auth
-  // create the new sate to set the id and data
+
   componentDidMount() {
     // set the values to the props so we use it
     const { setCurrentUser } = this.props

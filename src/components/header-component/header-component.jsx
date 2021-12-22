@@ -1,6 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import './header.style.scss'
+
+// import './header.style.scss'
+// import header styles
+import {
+  HeaderContainer,
+  LogoContainer,
+  OptionsConatiner,
+  OptionLink,
+  OptionDiv,
+} from './header.style'
 import { ReactComponent as Logo } from '../../assets/crown.svg'
 // import connect to connect the header with the redux, they are the higher order components thy use the component as the argument and provide the sooped up cmponents
 import { connect } from 'react-redux'
@@ -19,32 +27,25 @@ import { selectCurrentUser } from '../../redux/user/user.selector'
 
 // DESTUCTURE THE CURRENT USER that we are geting from over app
 const Header = ({ currentUser, hidden }) => (
-  <div className="header">
-    <Link className="logo-contianer" to="/">
+  <HeaderContainer>
+    <LogoContainer to="/">
       <Logo className="logo" />
-    </Link>
+    </LogoContainer>
 
-    <div className="options">
-      <Link className="option" to="/shop">
-        SHOP
-      </Link>
-      <Link className="option" to="/shop">
-        CONTACT
-      </Link>
+    <OptionsConatiner>
+      <OptionLink to="/shop">SHOP</OptionLink>
+      <OptionLink to="/shop">CONTACT</OptionLink>
+
       {currentUser ? (
-        <div className="option" onClick={() => auth.signOut()}>
-          SIGN OUT
-        </div>
+        <OptionDiv onClick={() => auth.signOut()}>SIGN OUT</OptionDiv>
       ) : (
-        <Link className="option" to="/signin">
-          SIGN IN
-        </Link>
+        <OptionLink to="/signin">SIGN IN</OptionLink>
       )}
       <CartIcon />
-    </div>
+    </OptionsConatiner>
 
     {hidden ? null : <CartDropdown />}
-  </div>
+  </HeaderContainer>
 )
 // on click (signout) privided to us by fire base libaray
 // Add the curent user here if there is a div it will pass it out other wise it pass the link(using ternary oprator)
